@@ -20,7 +20,10 @@ module Capybara
         select2_container = first(:css, options[:css])
       else
         select_name = options[:from]
-        select2_container = find("label", text: select_name).find(:xpath, '..').find(".select2-container")
+        label = find('label', text: select_name)
+        focusser = find(:xpath, "//*[@id = #{label[:for].inspect}]")
+        select2_container = focusser.find(:xpath,
+          "./ancestor::div[contains(concat(' ', normalize-space(@class), ' '), ' select2-container ')]")
       end
 
       single = select2_container.first('.select2-choice')
