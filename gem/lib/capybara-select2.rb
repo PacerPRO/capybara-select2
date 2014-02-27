@@ -1,6 +1,14 @@
 require "capybara-select2/version"
 require 'rspec/core'
 
+def trigger_click(element)
+  begin
+    element.trigger('click')
+  rescue Capybara::NotSupportedByDriverError
+    element.click
+  end
+end
+
 module Capybara
   module Select2
     def select2(value, options = {})
@@ -9,7 +17,7 @@ module Capybara
       single = select2_container.first('.select2-choice')
       multiple = select2_container.first('.select2-choices')
 
-      single.click if single
+      trigger_click(single) if single
 
       if options.has_key? :search
         find(:xpath, "//body").find("input.select2-input").set(value)
@@ -19,8 +27,8 @@ module Capybara
         drop_container = ".select2-drop"
       end
 
-      [value].flatten.each_with_index do |value, index|
-        multiple.click if multiple# unless index == 0
+      [value].flatten.each do |value|
+        trigger_click(multiple) if multiple
         find(:xpath, "//body").find("#{drop_container} li", text: value).click
       end
     end
