@@ -1,5 +1,7 @@
 # Capybara::Select2
 
+[![Code Climate](https://codeclimate.com/github/goodwill/capybara-select2.png)](https://codeclimate.com/github/goodwill/capybara-select2)
+
 All this gem does is something very simple- allow you to trigger select2 dropdown to select the value you want. The original select doesn't with the javascript overrides, so this new helper method does only this thing.
 
 ## Installation
@@ -13,7 +15,7 @@ Or, add it into your test group
     group :test do
       gem 'capybara-select2'
       ...
-    end	
+    end
 
 And then execute:
 
@@ -31,9 +33,19 @@ Just use this method inside your capybara test:
 
     select2("Dropdown Text", from: "Label of the dropdown")
 
-If the select2 field has a `min_length` option (acts as a search field) specify it with :
-    
+or
+
+    select2("Dropdown Text", xpath: "<xpath of the dropdown>")
+
+If the select2 field has a `min_length` option (acts as a search field) specify it with:
+
     select2("foo", from: "Label of the dropdown", search: true)
+
+If select2 field has [tags](http://ivaynberg.github.io/select2/#tags) option you can use:
+
+```ruby
+select2_tag('value', from: 'Label of input')
+```
 
 ## Contributing
 
