@@ -19,7 +19,7 @@ module Capybara
       end
 
       # Open select2 field
-      if select2_container.has_selector?(".select2-choice")
+      if select2_container.first("select2-choice").present?
         select2_container.find(".select2-choice").click
       else
         select2_container.find(".select2-choices").click
